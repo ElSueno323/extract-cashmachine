@@ -1,0 +1,11 @@
+exports/
+__pycache__/
+*.pyc
+.venv/
+build/
+dist/
+.env
+.tools/
+grand-livre.exe
+web/node_modules/
+web/elm-stuff/
