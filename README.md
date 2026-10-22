@@ -2,7 +2,7 @@
 
 Application web pour extraire les transactions des caisses ShopMaster et les télécharger en Excel. Le front est en Elm, le back en Go.
 
-Sur le réseau, l’adresse est [http://grandlivre.local](http://grandlivre.local). Elle pointe vers le serveur `192.168.10.210`.
+Sur le réseau, l’adresse est [http://grandlivre.local](http://grandlivre.local). Elle pointe vers le serveur `192.168.10.210`. Une poussée sur `master` est installée sur ce serveur dans la minute qui suit.
 
 ## Pour les utilisateurs
 

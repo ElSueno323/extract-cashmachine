@@ -61,7 +61,23 @@ sudo nginx -t && sudo systemctl reload nginx
 
 ## Mettre à jour le programme
 
-Depuis un poste de développement, produire un binaire Linux :
+Chaque poussée sur `master` est récupérée par le serveur, au plus une minute plus tard. Le service `grand-livre-deploy.timer` lance `scripts/deploy.sh` : il met à jour le code, reconstruit l’interface et le binaire, puis redémarre `grand-livre`. Le fichier `/opt/grand-livre/.env` n’est pas remplacé.
+
+GitHub lui-même ne peut pas se connecter à `192.168.10.210`, qui n’est pas une adresse publique. Le serveur va donc chercher les commits. Le workflow `.github/workflows/ci.yml` compile et teste le projet sur GitHub, sans le déployer.
+
+Journal du déploiement :
+
+```bash
+sudo journalctl -u grand-livre-deploy -n 80 --no-pager
+```
+
+Pour forcer une mise à jour :
+
+```bash
+sudo systemctl start grand-livre-deploy.service
+```
+
+Depuis un poste de développement, un binaire Linux peut encore être produit à la main :
 
 ```powershell
 $env:GOOS = "linux"
@@ -70,13 +86,7 @@ $env:CGO_ENABLED = "0"
 go build -o grand-livre ./server
 ```
 
-Le déposer à la place de `/opt/grand-livre/grand-livre`, puis :
-
-```bash
-sudo systemctl restart grand-livre
-```
-
-L’interface Elm est déjà incluse dans le binaire. Recompiler `web/src/Main.elm` vers `server/static/elm.js` avant `go build`, sinon le serveur embarque l’ancienne page.
+L’interface Elm est incluse dans le binaire. Le script de déploiement la recompile avant `go build`.
 
 ## Contrôle rapide
 

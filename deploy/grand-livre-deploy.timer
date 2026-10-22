@@ -1,0 +1,10 @@
+[Unit]
+Description=Vérifie GitHub chaque minute et déploie Grand livre
+
+[Timer]
+OnBootSec=45
+OnUnitActiveSec=60
+AccuracySec=15
+
+[Install]
+WantedBy=timers.target

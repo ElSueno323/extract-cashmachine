@@ -1,0 +1,10 @@
+[Unit]
+Description=Déploie Grand livre depuis GitHub
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=ubuntu
+Group=ubuntu
+ExecStart=/opt/grand-livre/deploy.sh
