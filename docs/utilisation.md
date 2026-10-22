@@ -1,6 +1,8 @@
 # Utilisation
 
-Ouvrir l’adresse configurée dans `LISTEN_ADDR`. Au lancement, `grand-livre.exe` et `go run ./server` ouvrent le navigateur.
+Sur le réseau, ouvrir [http://grandlivre.local](http://grandlivre.local). Cette adresse est le service installé sur `192.168.10.210`.
+
+`grand-livre.exe` et `go run ./server` servent la même application en local, sur l’adresse de `LISTEN_ADDR`, en général `http://127.0.0.1:8080`.
 
 La période proposée va du premier jour du mois en cours à aujourd’hui. Les caisses connues du `.env` sont cochées.
 

@@ -1,5 +1,7 @@
 # Développement
 
+Le service utilisé par le réseau est décrit dans [deploiement.md](deploiement.md). Le nom `grandlivre.local` est décrit dans [dns.md](dns.md).
+
 ## Arborescence
 
 ```

@@ -1,47 +1,32 @@
 # Extract Cashmachine
 
-Application web pour extraire les transactions des caisses ShopMaster et les télécharger en Excel.
+Application web pour extraire les transactions des caisses ShopMaster et les télécharger en Excel. Le front est en Elm, le back en Go.
 
-Le front est en [Elm](web/src/Main.elm). Le back est en Go. Les adresses des caisses et les autres paramètres sensibles sont lus dans un fichier `.env` local, qui n’est pas versionné.
+Sur le réseau, l’adresse est [http://grandlivre.local](http://grandlivre.local). Elle pointe vers le serveur `192.168.10.210`.
 
-## Démarrage
+## Pour les utilisateurs
 
-1. Copier le modèle de configuration :
+1. Ouvrir [http://grandlivre.local](http://grandlivre.local).
+2. Cocher une ou plusieurs caisses.
+3. Choisir la période.
+4. Lancer l’extraction.
 
-```powershell
-copy .env.example .env
-```
+Chaque caisse qui répond produit un fichier Excel. S’il y en a plusieurs, un zip les regroupe. Une caisse injoignable est ignorée, les autres continuent. Le détail est dans [docs/utilisation.md](docs/utilisation.md).
 
-2. Renseigner `.env` : une ligne `SITE_n` par caisse, plus le chemin du CSV. Voir [docs/configuration.md](docs/configuration.md).
-
-3. Lancer l’application depuis la racine du projet :
-
-```powershell
-.\grand-livre.exe
-```
-
-Le navigateur s’ouvre sur l’adresse indiquée par `LISTEN_ADDR` (par défaut `http://127.0.0.1:8080`).
-
-Sans l’exécutable déjà compilé :
-
-```powershell
-go run ./server
-```
-
-## Utilisation
-
-Cocher une ou plusieurs caisses, choisir la période, puis lancer l’extraction. Chaque caisse qui répond produit un fichier `.xlsx`. S’il y en a plusieurs, un `.zip` les regroupe. Une caisse injoignable est ignorée, les autres continuent.
-
-Le détail des écrans, des fichiers et des erreurs est dans [docs/utilisation.md](docs/utilisation.md).
+Si le nom ne s’ouvre pas, lancer `ipconfig /flushdns` puis réessayer. Le nom est créé dans le DNS interne, voir [docs/dns.md](docs/dns.md).
 
 ## Documentation
 
 | Document | Contenu |
 | --- | --- |
-| [docs/utilisation.md](docs/utilisation.md) | Écran, fichiers Excel, cas d’erreur |
-| [docs/configuration.md](docs/configuration.md) | Variables du fichier `.env` |
-| [docs/developpement.md](docs/developpement.md) | Architecture, API, compilation, tests |
+| [docs/utilisation.md](docs/utilisation.md) | Écran, fichiers Excel, erreurs |
+| [docs/dns.md](docs/dns.md) | Nom `grandlivre.local` pour tout le réseau |
+| [docs/deploiement.md](docs/deploiement.md) | Service sur `192.168.10.210` |
+| [docs/configuration.md](docs/configuration.md) | Fichier `.env` |
+| [docs/developpement.md](docs/developpement.md) | Code, compilation, API |
 
 ## Sécurité
 
-Ne jamais committer `.env`. Le dépôt contient seulement `.env.example`, avec des valeurs fictives. L’interface ne reçoit pas les adresses des caisses : le serveur les utilise pour interroger le réseau, puis renvoie les noms et les transactions.
+Le fichier `.env` n’est pas dans le dépôt. Il contient les adresses des caisses, le délai et le port d’écoute. L’interface ne reçoit que les noms des boutiques.
+
+Ne pas y mettre de mot de passe, et ne pas committer `.env`.
